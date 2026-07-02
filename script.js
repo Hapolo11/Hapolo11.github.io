@@ -103,6 +103,50 @@ function escapeHTML(str) {
   return div.innerHTML;
 }
 
+function initCarousel() {
+  const root = document.getElementById("featured-carousel");
+  if (!root) return;
+
+  const slides = Array.from(root.querySelectorAll(".carousel-slide"));
+  const dotsContainer = root.querySelector(".carousel-dots");
+  let current = 0;
+  let timer = null;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "dot" + (i === 0 ? " active" : "");
+    dot.setAttribute("aria-label", `Ir para imagem ${i + 1}`);
+    dot.addEventListener("click", () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+  const dots = Array.from(dotsContainer.querySelectorAll(".dot"));
+
+  function goTo(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle("active", i === current));
+    dots.forEach((d, i) => d.classList.toggle("active", i === current));
+  }
+
+  function restartAutoplay() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 4500);
+  }
+
+  root.querySelector(".prev").addEventListener("click", () => {
+    goTo(current - 1);
+    restartAutoplay();
+  });
+  root.querySelector(".next").addEventListener("click", () => {
+    goTo(current + 1);
+    restartAutoplay();
+  });
+  root.addEventListener("mouseenter", () => clearInterval(timer));
+  root.addEventListener("mouseleave", restartAutoplay);
+
+  restartAutoplay();
+}
+
 async function init() {
   try {
     const [user, repos] = await Promise.all([
@@ -119,4 +163,5 @@ async function init() {
   }
 }
 
+initCarousel();
 init();

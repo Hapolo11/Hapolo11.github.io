@@ -42,7 +42,18 @@
   <section id="projetos" class="section">
     <h2 class="section-title">Projeto em destaque</h2>
     <article class="featured-card">
-      <img class="featured-image" src="assets/featured-mockup.svg" alt="Ilustração do dashboard de classificação automática de atendimentos" width="640" height="420">
+      <div class="carousel" id="featured-carousel">
+        <div class="carousel-track">
+          <img src="assets/screenshots/01-dashboard.png" alt="Dashboard com métricas de atendimentos, acurácia da IA e distribuição de notas" class="carousel-slide active">
+          <img src="assets/screenshots/02-atendimentos.png" alt="Lista de atendimentos classificados pela IA, com categoria, sentimento e nota" class="carousel-slide">
+          <img src="assets/screenshots/03-entrada-dados.png" alt="Tela de entrada de dados: classificação individual ou upload em lote de CSV/Excel" class="carousel-slide">
+          <img src="assets/screenshots/04-configuracoes.png" alt="Configurações com planilhas do Google Sheets integradas ao processamento automático" class="carousel-slide">
+          <img src="assets/screenshots/05-golden-dataset.png" alt="Golden Dataset: acurácia da IA ao longo do tempo" class="carousel-slide">
+        </div>
+        <button type="button" class="carousel-btn prev" aria-label="Imagem anterior">‹</button>
+        <button type="button" class="carousel-btn next" aria-label="Próxima imagem">›</button>
+        <div class="carousel-dots"></div>
+      </div>
       <div class="featured-text">
         <h3>Sistema de Autoetiquetagem Inteligente de Atendimentos</h3>
         <p>
