@@ -13,12 +13,50 @@ const LANG_COLORS = {
   Shell: "#89e051",
 };
 
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1h — evita estourar o limite de requisições sem autenticação do GitHub
+
 document.getElementById("year").textContent = new Date().getFullYear();
 
 async function fetchJSON(url) {
   const res = await fetch(url, { headers: { Accept: "application/vnd.github+json" } });
   if (!res.ok) throw new Error(`GitHub API error ${res.status} for ${url}`);
   return res.json();
+}
+
+function readCache(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data }));
+  } catch {
+    // localStorage indisponível/cheio — cache é só uma otimização, segue sem ele.
+  }
+}
+
+async function cachedFetchJSON(url) {
+  const key = `gh-cache:${url}`;
+  const cached = readCache(key);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
+    return cached.data;
+  }
+  try {
+    const data = await fetchJSON(url);
+    writeCache(key, data);
+    return data;
+  } catch (err) {
+    if (cached) {
+      console.warn(`Falha ao atualizar ${url}, usando cache anterior`, err);
+      return cached.data;
+    }
+    throw err;
+  }
 }
 
 function timeAgo(dateStr) {
@@ -85,7 +123,7 @@ async function renderSkills(repos) {
 
   try {
     const perRepoLanguages = await Promise.all(
-      repos.map((r) => fetchJSON(`https://api.github.com/repos/${GITHUB_USERNAME}/${r.name}/languages`))
+      repos.map((r) => cachedFetchJSON(`https://api.github.com/repos/${GITHUB_USERNAME}/${r.name}/languages`))
     );
     perRepoLanguages.forEach((langs) => {
       Object.entries(langs).forEach(([lang, bytes]) => {
@@ -163,8 +201,8 @@ function initCarousel() {
 async function init() {
   try {
     const [user, repos] = await Promise.all([
-      fetchJSON(`https://api.github.com/users/${GITHUB_USERNAME}`),
-      fetchJSON(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`),
+      cachedFetchJSON(`https://api.github.com/users/${GITHUB_USERNAME}`),
+      cachedFetchJSON(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`),
     ]);
     renderProfile(user);
     renderRepos(repos);
