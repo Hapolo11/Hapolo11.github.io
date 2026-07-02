@@ -345,6 +345,12 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
   margin: 0 0 24px;
 }
 
+.featured-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .tag-list li {
   background: rgba(239,68,68,0.14);
   border: 1px solid rgba(239,68,68,0.3);
