@@ -210,6 +210,28 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
   padding: 32px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.featured-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+@media (min-width: 760px) {
+  .featured-card {
+    flex-direction: row;
+    align-items: center;
+  }
+  .featured-image {
+    width: 52%;
+    flex-shrink: 0;
+  }
 }
 
 .featured-card::before {
