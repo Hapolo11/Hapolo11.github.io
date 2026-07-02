@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hapolo11 · Portfólio</title>
+<meta name="description" content="Portfólio de projetos de Hapolo11 — desenvolvedor de software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">&lt;Hapolo11/&gt;</a>
+    <nav class="nav-links">
+      <a href="#projetos">Projetos</a>
+      <a href="#skills">Skills</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a class="btn btn-ghost" href="https://github.com/Hapolo11" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<main>
+  <section id="top" class="hero">
+    <img id="avatar" class="avatar" alt="Foto de perfil do GitHub" width="128" height="128">
+    <p class="eyebrow">Olá, eu sou</p>
+    <h1 id="name">Hapolo11</h1>
+    <p class="tagline" id="tagline">Desenvolvedor de software focado em back-end, APIs e automação com IA.</p>
+    <div class="hero-actions">
+      <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+      <a href="#contato" class="btn btn-ghost">Entrar em contato</a>
+    </div>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section id="projetos" class="section">
+    <h2 class="section-title">Projeto em destaque</h2>
+    <article class="featured-card">
+      <div class="featured-text">
+        <h3>Sistema de Autoetiquetagem Inteligente de Atendimentos</h3>
+        <p>
+          API back-end em <strong>FastAPI</strong> que classifica atendimentos automaticamente
+          (categoria, intenção, sentimento, criticidade), avalia a qualidade da interação com um score
+          ponderado, aprende continuamente com correções humanas e processa lotes de dados vindos de
+          CSV/Excel ou Google Sheets — tudo orquestrado com um LLM (Groq / Llama 3.1).
+        </p>
+        <ul class="tag-list">
+          <li>FastAPI</li>
+          <li>PostgreSQL</li>
+          <li>SQLAlchemy</li>
+          <li>LLM / Groq</li>
+          <li>Pandas</li>
+          <li>Pydantic</li>
+        </ul>
+        <div class="featured-actions">
+          <a class="btn btn-primary" href="https://github.com/Sistema-Inteligente-de-Atendimentos/autoetiquetagem-atendimentos-api-squad-12" target="_blank" rel="noopener">Ver repositório</a>
+        </div>
+      </div>
+    </article>
+
+    <h2 class="section-title section-title-spaced">Outros projetos</h2>
+    <p class="section-subtitle">Carregados automaticamente do meu <a href="https://github.com/Hapolo11?tab=repositories" target="_blank" rel="noopener">GitHub</a>.</p>
+    <div id="repo-grid" class="repo-grid">
+      <p class="loading">Carregando repositórios…</p>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <h2 class="section-title">Tecnologias</h2>
+    <div id="skills-grid" class="skills-grid">
+      <p class="loading">Carregando tecnologias…</p>
+    </div>
+  </section>
+
+  <section id="contato" class="section contact">
+    <h2 class="section-title">Vamos conversar?</h2>
+    <p class="section-subtitle">Estou aberto a oportunidades e colaborações.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="https://github.com/Hapolo11" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="mailto:hapolosup@gmail.com">hapolosup@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Feito por Hapolo11 · <span id="year"></span></p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
