@@ -79,17 +79,30 @@ function renderRepos(repos) {
   renderSkills(visible);
 }
 
-function renderSkills(repos) {
-  const counts = {};
-  repos.forEach((r) => {
-    if (r.language) counts[r.language] = (counts[r.language] || 0) + 1;
-  });
+async function renderSkills(repos) {
+  const skillsGrid = document.getElementById("skills-grid");
+  const byteTotals = {};
+
+  try {
+    const perRepoLanguages = await Promise.all(
+      repos.map((r) => fetchJSON(`https://api.github.com/repos/${GITHUB_USERNAME}/${r.name}/languages`))
+    );
+    perRepoLanguages.forEach((langs) => {
+      Object.entries(langs).forEach(([lang, bytes]) => {
+        byteTotals[lang] = (byteTotals[lang] || 0) + bytes;
+      });
+    });
+  } catch (err) {
+    console.error(err);
+    repos.forEach((r) => {
+      if (r.language) byteTotals[r.language] = (byteTotals[r.language] || 0) + 1;
+    });
+  }
 
   const manualExtras = ["FastAPI", "SQLAlchemy", "PostgreSQL", "LLM / Groq"];
-  const languages = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+  const languages = Object.keys(byteTotals).sort((a, b) => byteTotals[b] - byteTotals[a]);
   const skills = [...new Set([...languages, ...manualExtras])];
 
-  const skillsGrid = document.getElementById("skills-grid");
   if (!skills.length) {
     skillsGrid.innerHTML = '<p class="empty">Nenhuma tecnologia detectada.</p>';
     return;
