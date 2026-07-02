@@ -1,4 +1,5 @@
 const GITHUB_USERNAME = "Hapolo11";
+const DISPLAY_NAME = "Hapolo Luiz";
 // Repos to hide from the auto-loaded grid (profile README repo, anything already featured by hand).
 const EXCLUDE_REPOS = [GITHUB_USERNAME.toLowerCase()];
 
@@ -33,7 +34,7 @@ function timeAgo(dateStr) {
 
 function renderProfile(user) {
   document.getElementById("avatar").src = user.avatar_url;
-  document.getElementById("name").textContent = user.name || user.login;
+  document.getElementById("name").textContent = user.name || DISPLAY_NAME;
   if (user.bio) document.getElementById("tagline").textContent = user.bio;
 
   const stats = [
@@ -61,7 +62,7 @@ function renderRepos(repos) {
   grid.innerHTML = visible
     .map((repo) => {
       const lang = repo.language;
-      const dotColor = lang && LANG_COLORS[lang] ? LANG_COLORS[lang] : "var(--accent-2)";
+      const dotColor = lang && LANG_COLORS[lang] ? LANG_COLORS[lang] : "var(--accent)";
       return `
         <article class="repo-card">
           <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
