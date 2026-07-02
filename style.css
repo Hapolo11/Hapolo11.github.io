@@ -84,6 +84,11 @@ a {
 
 .nav-links a:hover { color: var(--text); }
 
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
